@@ -1,5 +1,23 @@
 var issueContainerEl = document.querySelector("#issues-container");
 var limitWarningEl = document.querySelector("#limit-warning");
+var repoNameEl = document.querySelector("#repo-name");
+
+//dynamically gets clicked on repos 
+var getRepoName = function() {
+    var queryString = document.location.search; 
+    //splits at equal sign and gets second element in array
+    var repoName = queryString.split("=")[1];
+    //The conditional statement will only display the repo name and make the fetch call if the value for repoName exists.
+    if (repoName) {
+        repoNameEl.textContent = repoName; 
+        getReopIssues(repoName);
+    } else {
+        // if no repo was given, redirect to the homepage
+        document.location.replace("./index.html")
+    }
+   
+}
+
 
 
 var getReopIssues = function(repo) {
@@ -15,7 +33,8 @@ var getReopIssues = function(repo) {
                 }
             });
         } else {
-            alert("There was a problem with your request!");
+             // if not successful, redirect to homepage
+            document.location.replace("./index.html")
         }
     });
 };
@@ -75,4 +94,5 @@ var displayWarning = function(repo) {
 };
 
 
-getReopIssues("facebook/react")
+//getReopIssues("facebook/react")
+getRepoName();
